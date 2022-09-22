@@ -4,6 +4,14 @@ Eine App für Vereine, die interne Schiedsrichteransetzungen fürs Wochenende ve
 
 Erst einmal nur auf Handballvereine bezogen. Andere Sportarten werden folgen.
 
+## Verwendete Frameworks
+
+- Svelte (Frontend)
+- Bulma (Frontend)
+- Supabase (Backend)
+- Firebase (Notifications)
+- Later: Svelte Native (Android/iOS)
+
 ## Installation & Start
 
 ```
