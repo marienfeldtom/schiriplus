@@ -7,51 +7,41 @@
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
-<section>
-	<h1>
-		<span class="welcome">
-			<picture>
-				<source srcset="svelte-welcome.webp" type="image/webp" />
-				<img src="svelte-welcome.png" alt="Welcome" />
-			</picture>
-		</span>
-
-		to your new<br />SvelteKit app
-	</h1>
-
-	<h2>
-		try editing <strong>src/routes/+page.svelte</strong>
-	</h2>
-
-	<Counter />
+<section class="section">
+	<h1 class="title is-1">Schiri Plus</h1>
+	<div class="tile is-ancestor">
+		<div class="tile">
+			<div class="tile is-parent">
+				<article class="tile is-child notification is-primary">
+					<p class="title">Für den Schiriwart</p>
+					<p class="subtitle"> Einfache Verwaltung von Schieds- und Kamprichtern. Automatische Ansetzungen mit intelligenter Berücksichtigung von Erfahrungen und Altersklassen.
+</p>
+					<a class="button">Mehr Infos</a>
+				</article>
+			</div>
+		</div>
+		<div class="tile">
+			<div class="tile is-parent">
+				<article class="tile is-child notification is-info">
+					<p class="title">Für Schiris</p>
+					<p class="subtitle">Alle Ansetzungen auf einen Blick, in einer Anwendung. Einfaches festlegen von Urlaubstagen und Wunsch-Spielen.</p>
+					<a class="button">view details</a>
+				</article>
+			</div>
+		</div>
+		<div class="tile">
+			<div class="tile is-parent">
+				<article class="tile is-child notification is-warning">
+					<p class="title">Trainer</p>
+					<p class="subtitle">Direktes Anlegen von Spielen in der Anwendung. Schiris bekommen dann direkt eine Beanchrichtigung und können sich freiwillig für das Spiel melden.
+</p>
+					<a class="button">view details</a>
+				</article>
+			</div>
+		</div>
+	</div>
 </section>
 
 <style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 1;
-	}
-
-	h1 {
-		width: 100%;
-	}
-
-	.welcome {
-		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
-	}
+	
 </style>
