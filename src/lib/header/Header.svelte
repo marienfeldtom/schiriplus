@@ -1,6 +1,7 @@
 <script>
   import { user } from "$lib/sessionStore";
   import { supabase } from "$lib/supabaseClient";
+  import { invalidateAll } from "$app/navigation";
   import { signOut, getProfile } from "$lib/auth";
   user.set(supabase.auth.user());
 

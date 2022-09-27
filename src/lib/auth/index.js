@@ -1,6 +1,7 @@
 import { supabase } from "$lib/supabaseClient";
 import { variables } from "$lib/variables";
 import { errorToast } from "$lib/toast";
+import { goto } from "$app/navigation";
 import { user, profile } from "$lib/sessionStore";
 
 user.set(supabase.auth.user());
@@ -34,8 +35,7 @@ export async function signInWithGoogle() {
   } catch (error) {
     errorToast(error.error_description || error.message);
   } finally {
-    //await getProfile();
-    //loading = false
+    goto("/")
   }
 }
 
@@ -52,7 +52,7 @@ export async function signOut() {
   } catch (error) {
     errorToast(error.message);
   } finally {
-    //getProfile();
+    goto("/")
   }
 }
 

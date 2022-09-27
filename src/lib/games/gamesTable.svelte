@@ -2,7 +2,7 @@
   import TableDeskButton from "./tableDeskButton.svelte";
   import {errorToast} from "$lib/toast";
   import { supabase } from "$lib/supabaseClient";
-  import { goto, invalidateAll } from "$app/navigation";
+  import { invalidateAll } from "$app/navigation";
   import moment from "moment";
   export let games;
 
