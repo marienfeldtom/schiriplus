@@ -23,4 +23,6 @@ $primary-invert: $pink-invert;
 // 4. Import the rest of Bulma
 */
 
+$progress-bar-background-color: hsl(0, 0%, 71%);
+
 @import "../node_modules/bulma/bulma";
