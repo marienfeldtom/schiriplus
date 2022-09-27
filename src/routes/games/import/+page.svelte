@@ -45,7 +45,7 @@
       name: item.summary,
       date: item.startDate,
       location: item.location.split("\\").join(""),
-      home: item.summary.split("]").pop().split("-")[0].trim() == "TuRa Meldorf",
+      home: item.summary.split("]").pop().split("-")[0].trim().contains("TuRa Meldorf"),
     }));
     result.forEach((o, i) => o.id = i + 1);
     result.forEach(function(item) {

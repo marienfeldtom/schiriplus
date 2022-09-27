@@ -1,7 +1,6 @@
 <script>
   import { user } from "$lib/sessionStore";
   import { supabase } from "$lib/supabaseClient";
-  import { invalidateAll } from "$app/navigation";
   import { signOut, getProfile } from "$lib/auth";
   user.set(supabase.auth.user());
 
@@ -24,6 +23,7 @@
       <b style="margin-left: 10px;">Schiri Plus</b>
     </a>
 
+    <!-- svelte-ignore a11y-missing-attribute -->
     <a
       role="button"
       class="navbar-burger"
@@ -46,13 +46,13 @@
       <a class="navbar-item" href="/teams"> Mannschaften </a>
 
       <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link"> Mehr </a>
+        <a class="navbar-link" href="/"> Mehr </a>
 
         <div class="navbar-dropdown">
-          <a class="navbar-item"> Jobs </a>
-          <a class="navbar-item"> Contact </a>
+          <a class="navbar-item" href="/"> Jobs </a>
+          <a class="navbar-item" href="/"> Contact </a>
           <hr class="navbar-divider" />
-          <a class="navbar-item"> Report an issue </a>
+          <a class="navbar-item" href="/"> Report an issue </a>
         </div>
       </div>
     </div>
@@ -61,13 +61,13 @@
       <div class="navbar-item">
         <div class="buttons">
           {#if $user}
-            <a href="#" on:click={signOut} class="button is-danger">
+            <button on:click={signOut} class="button is-danger">
               Ausloggen
-            </a>
+            </button>
           {:else}
-            <a href="#" class="button is-primary">
+            <button class="button is-primary">
               <strong>Registrieren</strong>
-            </a>
+            </button>
             <a href="/login" class="button is-light"> Einloggen </a>
           {/if}
         </div>

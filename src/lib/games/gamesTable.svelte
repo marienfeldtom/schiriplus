@@ -3,15 +3,17 @@
   import {errorToast} from "$lib/toast";
   import { supabase } from "$lib/supabaseClient";
   import { invalidateAll } from "$app/navigation";
+  import { loading } from "$lib/sessionStore";
   import moment from "moment";
   export let games;
 
   async function removeParticipation(event) {
+    //loading.set(true);
     const { data, error } = await supabase
       .from("games")
       .update({ [event.detail.column_name]: null })
       .match({ id: event.detail.game.id });
-    invalidateAll();
+    await invalidateAll();
   }
 
   async function addParticipation(event) {
@@ -25,11 +27,12 @@
     ) {
       errorToast("Du bist bereits an dem Spiel beteiligt!");
     } else {
+    //loading.set(true);
       const { data, error } = await supabase
         .from("games")
         .update({ [event.detail.column_name]: user_id })
         .match({ id: event.detail.game.id });
-      invalidateAll();
+        await invalidateAll();
     }
   }
 </script>
