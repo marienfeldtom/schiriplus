@@ -12,7 +12,6 @@ export async function load({ params }) {
     .eq("id", params.slug)
     .order('date', {foreignTable: 'games'})
     .single();
-    console.log(data);
   return {
     team: data,
   };

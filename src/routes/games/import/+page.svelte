@@ -53,7 +53,6 @@
             gamesToImport.push(item);
         }
     });
-    console.log(result);
     return result;
   };
 </script>

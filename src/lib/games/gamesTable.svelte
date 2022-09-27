@@ -15,7 +15,6 @@
   }
 
   async function addParticipation(event) {
-    console.log(event.detail.game);
     let game = event.detail.game;
     let user_id = supabase.auth.user().id;
     if (

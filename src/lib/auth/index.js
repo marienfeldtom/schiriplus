@@ -71,7 +71,6 @@ export async function getProfile() {
 
       if (data) {
         profile.set(data);
-        console.log(data.avatar_url);
       }
     } catch (error) {
       errorToast(error.message);
