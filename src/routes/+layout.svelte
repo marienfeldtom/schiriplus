@@ -14,7 +14,6 @@ let session;
   onMount(() => {
     supabase.auth.getSession().then(({ data }) => {
       session = data.session;
-      console.log(session);
       user.set(data.session.user);
     })
 

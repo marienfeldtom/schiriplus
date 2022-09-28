@@ -1,12 +1,34 @@
 <script>
-  import TableDeskButton from "./tableDeskButton.svelte";
-  import { errorToast } from "$lib/toast";
-  import { supabase } from "$lib/supabaseClient";
   import { invalidateAll } from "$app/navigation";
   import { user } from "$lib/sessionStore";
-  import { get } from "svelte/store";
+  import { supabase } from "$lib/supabaseClient";
+  import { errorToast } from "$lib/toast";
   import moment from "moment";
+  import { get } from "svelte/store";
+  import ChangeModal from "./changeModal.svelte";
+  import TableDeskButton from "./tableDeskButton.svelte";
+  
   export let games;
+  
+  let changeModalActive = false;
+  let modal_game;
+  let modal_title;
+  let modal_column;
+  let modal_currentParticipant;
+
+  function closeModal() {
+    changeModalActive = false;
+  }
+
+  async function toggleModal(event) {
+    if(!changeModalActive) {
+      modal_game = event.detail.game;
+      modal_title = event.detail.game.name;
+      modal_column = event.detail.column_name;
+      modal_currentParticipant = event.detail.currentParticipant ? event.detail.currentParticipant.id : null;
+    }
+    changeModalActive = !changeModalActive;
+  }
 
   async function removeParticipation(event) {
     //loading.set(true);
@@ -42,6 +64,9 @@
   <title>Startseite</title>
   <meta name="description" content="SchiriPlus" />
 </svelte:head>
+
+<ChangeModal currentParticipant="{modal_currentParticipant}" title="{modal_title}" column_name="{modal_column}" game="{modal_game}" active="{changeModalActive}" on:closeModal="{closeModal}"></ChangeModal>
+
 <div class="b-table">
   <div class="table-wrapper has-mobile-cards">
     <table class="table is-fullwidth is-striped is-hoverable is-fullwidth">
@@ -67,6 +92,7 @@
             <TableDeskButton
               on:addParticipation={addParticipation}
               on:removeParticipation={removeParticipation}
+              on:toggleModal={toggleModal}
               column_name="referee_1_id"
               referee={game.referee1}
               data_label="Schiedsrichter 1"
@@ -76,6 +102,7 @@
             <TableDeskButton
               on:addParticipation={addParticipation}
               on:removeParticipation={removeParticipation}
+              on:toggleModal={toggleModal}
               column_name="referee_2_id"
               referee={game.referee2}
               data_label="Schiedsrichter 2"
@@ -85,6 +112,7 @@
             <TableDeskButton
               on:addParticipation={addParticipation}
               on:removeParticipation={removeParticipation}
+              on:toggleModal={toggleModal}
               column_name="judge_1_id"
               referee={game.judge1}
               data_label="Kampfgericht 1"
@@ -94,6 +122,7 @@
             <TableDeskButton
               on:addParticipation={addParticipation}
               on:removeParticipation={removeParticipation}
+              on:toggleModal={toggleModal}
               column_name="judge_2_id"
               referee={game.judge2}
               data_label="Kampfgericht 2"

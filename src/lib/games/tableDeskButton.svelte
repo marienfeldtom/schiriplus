@@ -1,13 +1,16 @@
 <script>
-  import { custom_event, get_current_component } from "svelte/internal";
   import { user } from "$lib/sessionStore";
+  import { custom_event, get_current_component } from "svelte/internal";
   import { get } from "svelte/store";
+
   export let referee;
   export let needsReferee;
   export let game;
   export let column_name;
   export let data_label;
+  
   let loading = false;
+
   const dispatch = createEventDispatcher();
   export function createEventDispatcher() {
     const component = get_current_component();
@@ -29,6 +32,17 @@
       }
       return new Promise((resolve) => resolve(false));
     };
+  }
+
+  async function toggleModal() {
+    loading = true;
+    dispatch("toggleModal", {
+      column_name: column_name,
+      game: game,
+      currentParticipant: referee
+    }).finally(function () {
+      loading = false;
+    });
   }
 
   async function removeParticipation() {
@@ -54,7 +68,8 @@
 
 <td data-label={data_label}>
   {#if needsReferee}
-    {#if referee != null}
+  
+     {#if referee != null}
       {#if referee.id == get(user).id}
         <span class="ml-auto">{referee.username}</span>
         <button
@@ -72,7 +87,8 @@
         <span class="ml-auto">{referee.username}</span>
       {/if}
     {:else}
-      <span class="ml-auto">Fehlt</span><button
+      <span class="ml-auto">Fehlt</span>
+      <button
         title="Eintragen"
         on:click={addParticipation}
         class="button is-small is-info is-pulled-right ml-2 {loading
@@ -84,6 +100,15 @@
         </span>
       </button>
     {/if}
+    <button
+    title="Ändern"
+    on:click={toggleModal}
+    class="button is-small is-warning is-pulled-right ml-2"
+    >
+    <span class="icon is-small">
+      <i class="fas fa-pencil" />
+    </span>
+    </button>
   {:else}
     <span class="ml-auto">Angesetzt</span>
   {/if}
