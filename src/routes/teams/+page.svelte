@@ -26,17 +26,25 @@
           <tbody>
           {#each data.teams as team}
             <tr>
-                <td>{team.name} </td>
-                <td>{#if team.needs_referee} Ja {:else} Nein {/if}</td>
-                <td>
+                <td data-label="Mannschaft">{team.name} </td>
+                <td data-label="Benötigt Schiedsrichter">{#if team.needs_referee} Ja {:else} Nein {/if}</td>
+                <td class="is-actions-cell">
                     {#if team.games.length > 0} 
-                    <a href="/teams/{team.id}" class="button is-primary is-small">Spiele anzeigen</a>
+                    <a title="Spiele anzeigen" href="/teams/{team.id}" class="button is-primary is-small"><span class="icon is-small">
+                      <i class="fas fa-eye"></i>
+                    </span></a>
                     {:else} 
-                    <a href="/teams/{team.id}" class="button is-primary is-small">Spiele importieren</a>
+                    <a title="Spiele importieren" href="/games/import" class="button is-primary is-small"><span class="icon is-small">
+                      <i class="fas fa-upload"></i>
+                    </span></a>
                      {/if}
                     
-                    <a class="button is-info is-small">Bearbeiten</a>
-                    <a class="button is-danger is-small">Löschen</a>
+                    <a href="/teams/{team.id}" title="Bearbeiten" class="button is-info is-small"><span class="icon is-small">
+                      <i class="fas fa-pen-to-square"></i>
+                    </span></a>
+                    <button title="Löschen" class="button is-danger is-small"><span class="icon is-small">
+                      <i class="fas fa-trash"></i>
+                    </span></button>
                 </td>
             </tr>
           {/each}

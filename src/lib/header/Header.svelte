@@ -1,11 +1,18 @@
 <script>
   import { supabase } from "$lib/supabaseClient";
   import { User } from "$lib/sessionStore";
+  import { navigating } from "$app/stores";
+  import {clickOutside} from '$lib/clickOutside.js';
 
   export let isLoggedIn;
+  let isActive;
+
+  function handleClickOutside(event) {
+		isActive = false;
+	}
 </script>
 
-<nav class="navbar" role="navigation" aria-label="main navigation">
+<nav class="navbar" aria-label="main navigation" use:clickOutside on:click_outside={handleClickOutside}>
   <div class="navbar-brand">
     <a class="navbar-item" href="/">
       <img
@@ -22,6 +29,7 @@
       aria-label="menu"
       aria-expanded="false"
       data-target="navbarBasicExample"
+      on:click="{() => {isActive=!isActive}}"
     >
       <span aria-hidden="true" />
       <span aria-hidden="true" />
@@ -29,7 +37,7 @@
     </a>
   </div>
 
-  <div id="navbarBasicExample" class="navbar-menu">
+  <div id="navbarBasicExample" class="navbar-menu {isActive ? 'is-active': ''}">
     <div class="navbar-start">
       <a href="/" class="navbar-item"> Start </a>
 
@@ -69,4 +77,23 @@
 </nav>
 
 <style>
+  .navbar-menu.is-active {
+    animation: navAnim .2s ease-in-out;
+}
+
+@keyframes navAnim {
+  0% {
+    display: none;
+    opacity: 0;
+    height: 0;
+  }
+  1% {
+    display: block;
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    height: 396px;
+  }
+}
 </style>
