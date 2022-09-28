@@ -11,6 +11,8 @@
   export let column_name;
   export let currentParticipant;
 
+  let profiles = [];
+
   const dispatch = createEventDispatcher();
 
   function toggleModal() {

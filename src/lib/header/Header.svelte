@@ -1,6 +1,8 @@
 <script>
+  import { clickOutside } from '$lib/clickOutside.js';
+  import { role } from "$lib/sessionStore";
   import { supabase } from "$lib/supabaseClient";
-  import {clickOutside} from '$lib/clickOutside.js';
+  import { get, writable } from "svelte/store";
   import NavLink from "./NavLink.svelte";
 
   export let isLoggedIn;
@@ -9,6 +11,12 @@
   function handleClickOutside(event) {
 		isActive = false;
 	}
+
+  function toggleAdmin() {
+    console.log("test");
+    role.set({isAdmin: !get(role).isAdmin});
+    console.log(get(role))
+  }
 </script>
 
 <nav class="navbar" aria-label="main navigation" use:clickOutside on:click_outside={handleClickOutside}>
@@ -60,7 +68,11 @@
       <div class="navbar-item">
         <div class="buttons">
           {#if isLoggedIn}
-            <button on:click={() => supabase.auth.signOut()} class="button is-danger">
+          <div class="field mr-5">
+            <input id="switchRtlExample" on:click="{toggleAdmin}" type="checkbox" name="switchRtlExample" class="switch is-info is-small is-rounded" checked="checked">
+            <label for="switchRtlExample">Admin?</label>
+          </div>
+            <button on:click={() => supabase.auth.signOut()} class="button is-danger ml-3">
               Ausloggen
             </button>
           {:else}

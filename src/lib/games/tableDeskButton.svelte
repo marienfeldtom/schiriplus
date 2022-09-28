@@ -1,5 +1,5 @@
 <script>
-  import { user } from "$lib/sessionStore";
+  import { role, user } from "$lib/sessionStore";
   import { custom_event, get_current_component } from "svelte/internal";
   import { get } from "svelte/store";
 
@@ -100,6 +100,7 @@
         </span>
       </button>
     {/if}
+    {#if $role.isAdmin}
     <button
     title="Ändern"
     on:click={toggleModal}
@@ -109,6 +110,7 @@
       <i class="fas fa-pencil" />
     </span>
     </button>
+    {/if}
   {:else}
     <span class="ml-auto">Angesetzt</span>
   {/if}

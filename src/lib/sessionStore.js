@@ -14,3 +14,5 @@ const { subscribe, set } = writable('init');
 export const profile = writable(false)
 
 export const loading = writable(false)
+
+export const role = writable({isAdmin: true})
