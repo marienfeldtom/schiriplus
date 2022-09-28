@@ -2,13 +2,12 @@ import { supabase } from "$lib/supabaseClient";
 import { variables } from "$lib/variables";
 import { errorToast } from "$lib/toast";
 import { goto } from "$app/navigation";
-import { user, profile } from "$lib/sessionStore";
+import { User } from "$lib/sessionStore";
 
-user.set(supabase.auth.user());
+// user.set(supabase.auth.user());
 
-export const handleLogin = async (email, password) => {
+/* export const handleLogin = async (email, password) => {
   try {
-    //loading = true
     const { error } = await supabase.auth.signIn(
       { email, password },
       { redirectTo: variables.URL }
@@ -18,9 +17,8 @@ export const handleLogin = async (email, password) => {
     errorToast(error.error_description || error.message);
   } finally {
     getProfile();
-    //loading = false
   }
-};
+}; */
 
 export async function signInWithGoogle() {
   try {
@@ -35,11 +33,12 @@ export async function signInWithGoogle() {
   } catch (error) {
     errorToast(error.error_description || error.message);
   } finally {
+    User.set(session.user);
     goto("/")
   }
 }
 
-export async function signOut() {
+/* export async function signOut() {
   try {
     //loading = true
     let { error } = await supabase.auth.signOut();
@@ -54,9 +53,9 @@ export async function signOut() {
   } finally {
     goto("/")
   }
-}
+} */
 
-export async function getProfile() {
+/* export async function getProfile() {
   if (supabase.auth.user()) {
     try {
       //loading = true
@@ -83,4 +82,4 @@ export async function getProfile() {
         "https://p.kindpng.com/picc/s/685-6851196_person-icon-grey-hd-png-download.png",
     });
   }
-}
+} */

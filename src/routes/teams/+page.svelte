@@ -13,12 +13,17 @@
     <div class="columns is-centered">
       <div class="column is-half box">
         <h1 class="title is-1">Mannschaften</h1>
-        <table class="table">
-          <tr>
+        <div class="b-table">
+          <div class="table-wrapper has-mobile-cards">
+            <table class="table is-fullwidth is-striped is-hoverable is-fullwidth">
+              <thead>
+                <tr>
             <th>Mannschaft</th>
             <th>Schiedsrichter benötigt?</th>
             <th>Aktion</th>
           </tr>
+          </thead>
+          <tbody>
           {#each data.teams as team}
             <tr>
                 <td>{team.name} </td>
@@ -35,7 +40,10 @@
                 </td>
             </tr>
           {/each}
+        </tbody>
         </table>
+        </div>
+        </div>
       </div>
     </div>
   </div>

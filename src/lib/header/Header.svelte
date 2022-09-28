@@ -1,16 +1,8 @@
 <script>
-  import { user } from "$lib/sessionStore";
   import { supabase } from "$lib/supabaseClient";
-  import { signOut, getProfile } from "$lib/auth";
-  user.set(supabase.auth.user());
+  import { User } from "$lib/sessionStore";
 
-  supabase.auth.onAuthStateChange((state, session) => {
-    if (state == "SIGNED_IN") {
-      user.set(session.user);
-    } else {
-      user.set(false);
-    }
-  });
+  export let isLoggedIn;
 </script>
 
 <nav class="navbar" role="navigation" aria-label="main navigation">
@@ -60,8 +52,8 @@
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="buttons">
-          {#if $user}
-            <button on:click={signOut} class="button is-danger">
+          {#if isLoggedIn}
+            <button on:click={() => User.signout()} class="button is-danger">
               Ausloggen
             </button>
           {:else}

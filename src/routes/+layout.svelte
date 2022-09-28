@@ -1,34 +1,47 @@
 <script>
   import Header from "$lib/header/Header.svelte";
+  import { onDestroy } from "svelte";
   import "../app.css";
   import "../scss/main.scss";
-  import { navigating } from '$app/stores';
-  import { user, loading } from "$lib/sessionStore";
-  user.set(supabase.auth.user());
+  import { navigating } from "$app/stores";
+  import { User, loading } from "$lib/sessionStore";
+  //user.set(supabase.auth.user());
   import { SvelteToast } from "@zerodevx/svelte-toast";
   import { supabase } from "$lib/supabaseClient";
   import Login from "$lib/auth/Login.svelte";
 
   supabase.auth.onAuthStateChange((state, session) => {
     if (state == "SIGNED_IN") {
-      user.set(session.user);
+      User.set(session.user);
     } else {
-      user.set(false);
+      User.set(null);
     }
   });
+
+  let user;
+  const unUser = User.subscribe((v) => (user = v));
+  onDestroy(unUser);
+
+  $: isLoggedIn = !!user;
 </script>
 
-<Header />
+<Header {isLoggedIn} />
 
 <main>
   <SvelteToast />
-  <div class="pageloader is-left-to-right {$loading || $navigating ? 'is-active' : ''}"><span class="title">Einen Moment bitte...</span></div>
-  
-    {#if $user}
-      <slot />
-    {:else}
-      <Login />
-    {/if}
+  <div
+    class="pageloader is-left-to-right {$loading || $navigating
+      ? 'is-active'
+      : ''}"
+  >
+    <span class="title">Einen Moment bitte...</span>
+  </div>
+
+  {#if isLoggedIn}
+    <slot />
+  {:else}
+    <Login />
+  {/if}
 </main>
 
 <section class="section">
