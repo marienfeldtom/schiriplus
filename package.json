@@ -20,6 +20,7 @@
 		"@supabase/supabase-js": "^1.35.7",
 		"bulma": "^0.9.4",
 		"bulma-extensions": "^6.2.7",
+		"bulma-responsive-tables": "^1.2.5",
 		"ics-to-json": "^1.0.0",
 		"moment": "^2.29.4",
 		"sass": "^1.55.0",

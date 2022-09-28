@@ -5,6 +5,7 @@ import { custom_event, get_current_component } from 'svelte/internal'
   export let needsReferee;
   export let game;
   export let column_name;
+  export let data_label;
   let loading = false;
   const dispatch = createEventDispatcher()
   export function createEventDispatcher() {
@@ -51,26 +52,26 @@ import { custom_event, get_current_component } from 'svelte/internal'
   }
 </script>
 
-<td>
+<td data-label={data_label}>
   {#if needsReferee}
     {#if referee != null}
       {#if referee.user_id == user.id}
-        {referee.username} <button title="Absagen" on:click="{removeParticipation}" class="button is-small is-danger is-pulled-right ml-2 {loading ? 'is-loading' : ''}">
+      <span class="ml-auto"> {referee.username} </span> <button title="Absagen" on:click="{removeParticipation}" class="button is-small is-danger is-pulled-right ml-2 {loading ? 'is-loading' : ''}">
           <span class="icon is-small">
             <i class="fas fa-ban"></i>
           </span>
         </button>
       {:else}
-        {referee.username}
+      <span class="ml-auto">{referee.username}</span>
       {/if}
     {:else}
-    Fehlt <button title="Eintragen" on:click="{addParticipation}" class="button is-small is-info is-pulled-right ml-2 {loading ? 'is-loading' : ''}">
+    <span class="ml-auto">Fehlt</span><button title="Eintragen" on:click="{addParticipation}" class="button is-small is-info is-pulled-right ml-2 {loading ? 'is-loading' : ''}">
       <span class="icon is-small">
         <i class="fas fa-hand-point-up"></i>
       </span>
     </button>
     {/if}
   {:else}
-    Angesetzt
+  <span class="ml-auto">Angesetzt</span>
   {/if}
 </td>
