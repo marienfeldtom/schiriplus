@@ -13,9 +13,7 @@
 	}
 
   function toggleAdmin() {
-    console.log("test");
     role.set({isAdmin: !get(role).isAdmin});
-    console.log(get(role))
   }
 </script>
 
@@ -69,7 +67,7 @@
         <div class="buttons">
           {#if isLoggedIn}
           <div class="field mr-5">
-            <input id="switchRtlExample" on:click="{toggleAdmin}" type="checkbox" name="switchRtlExample" class="switch is-info is-small is-rounded" checked="checked">
+            <input id="switchRtlExample" checked="{get(role).isAdmin}" on:click="{toggleAdmin}" type="checkbox" name="switchRtlExample" class="switch is-info is-small is-rounded">
             <label for="switchRtlExample">Admin?</label>
           </div>
             <button on:click={() => supabase.auth.signOut()} class="button is-danger ml-3">

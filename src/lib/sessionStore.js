@@ -15,4 +15,4 @@ export const profile = writable(false)
 
 export const loading = writable(false)
 
-export const role = writable({isAdmin: true})
+export const role = writable({isAdmin: false})

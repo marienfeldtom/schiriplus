@@ -35,8 +35,9 @@
     } else {
       const { data, error } = await supabase
         .from("games")
-        .update({ [column_name]: currentParticipant })
+        .update({ [column_name]: currentParticipant ? currentParticipant : null })
         .match({ id: game.id });
+      dispatch("closeModal");
       await invalidateAll();
     }
   }
