@@ -1,6 +1,7 @@
 <script>
   import { supabase } from "$lib/supabaseClient";
   import {clickOutside} from '$lib/clickOutside.js';
+  import NavLink from "./NavLink.svelte";
 
   export let isLoggedIn;
   let isActive;
@@ -37,11 +38,11 @@
 
   <div id="navbarBasicExample" class="navbar-menu {isActive ? 'is-active': ''}">
     <div class="navbar-start">
-      <a href="/" class="navbar-item"> Start </a>
+      <NavLink href="/" on:toggle="{() => {isActive=false}}">Start</NavLink>
 
-      <a class="navbar-item" href="/games"> Spiele </a>
+      <NavLink href="/games" on:toggle="{() => {isActive=false}}">Spiele</NavLink>
 
-      <a class="navbar-item" href="/teams"> Mannschaften </a>
+      <NavLink href="/teams" on:toggle="{() => {isActive=false}}">Mannschaften</NavLink>
 
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link" href="/"> Mehr </a>
