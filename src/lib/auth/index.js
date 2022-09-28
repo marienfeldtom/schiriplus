@@ -33,7 +33,8 @@ export async function signInWithGoogle() {
   } catch (error) {
     errorToast(error.error_description || error.message);
   } finally {
-    User.set(session.user);
+    console.log("test " + session)
+    console.log("test " + user)
     goto("/")
   }
 }
