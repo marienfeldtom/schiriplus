@@ -1,7 +1,5 @@
 <script>
   import { supabase } from "$lib/supabaseClient";
-  import { User } from "$lib/sessionStore";
-  import { navigating } from "$app/stores";
   import {clickOutside} from '$lib/clickOutside.js';
 
   export let isLoggedIn;
@@ -61,7 +59,7 @@
       <div class="navbar-item">
         <div class="buttons">
           {#if isLoggedIn}
-            <button on:click={() => User.signout()} class="button is-danger">
+            <button on:click={() => supabase.auth.signOut()} class="button is-danger">
               Ausloggen
             </button>
           {:else}

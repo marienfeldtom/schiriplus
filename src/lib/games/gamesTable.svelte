@@ -3,7 +3,8 @@
   import { errorToast } from "$lib/toast";
   import { supabase } from "$lib/supabaseClient";
   import { invalidateAll } from "$app/navigation";
-  import { loading } from "$lib/sessionStore";
+  import { user } from "$lib/sessionStore";
+  import { get } from "svelte/store";
   import moment from "moment";
   export let games;
 
@@ -18,7 +19,7 @@
 
   async function addParticipation(event) {
     let game = event.detail.game;
-    let user_id = supabase.auth.user().id;
+    let user_id = get(user).id;
     if (
       game.referee_1_id == user_id ||
       game.referee_2_id == user_id ||

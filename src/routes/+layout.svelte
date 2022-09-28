@@ -1,28 +1,29 @@
 <script>
   import Header from "$lib/header/Header.svelte";
-  import { onDestroy } from "svelte";
+  import { onMount } from 'svelte';
   import "../app.css";
   import "../scss/main.scss";
   import { navigating } from "$app/stores";
-  import { User, loading } from "$lib/sessionStore";
-  //user.set(supabase.auth.user());
+  import { user, loading } from "$lib/sessionStore";
   import { SvelteToast } from "@zerodevx/svelte-toast";
   import { supabase } from "$lib/supabaseClient";
   import Login from "$lib/auth/Login.svelte";
 
-  supabase.auth.onAuthStateChange((state, session) => {
-    if (state == "SIGNED_IN") {
-      User.set(session.user);
-    } else {
-      User.set(null);
-    }
-  });
+let session;
 
-  let user;
-  const unUser = User.subscribe((v) => (user = v));
-  onDestroy(unUser);
+  onMount(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      session = data.session;
+      console.log(session);
+      user.set(data.session.user);
+    })
 
-  $: isLoggedIn = !!user;
+    supabase.auth.onAuthStateChange((_event, _session) => {
+      session = _session;
+    })
+  })
+
+  $: isLoggedIn = session;
 </script>
 
 <Header {isLoggedIn} />
@@ -37,7 +38,7 @@
     <span class="title">Einen Moment bitte...</span>
   </div>
 
-  {#if isLoggedIn}
+  {#if session}
     <slot />
   {:else}
     <Login />
