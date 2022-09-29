@@ -48,7 +48,8 @@
 
       <NavLink prefetch="{true}" href="/games" on:toggle="{() => {isActive=false}}">Alle Spiele</NavLink>
       <NavLink prefetch="{true}" href="/games/own" on:toggle="{() => {isActive=false}}">Meine Ansetzungen</NavLink>
-      <NavLink prefetch="{false}" href="/teams" on:toggle="{() => {isActive=false}}">Mannschaften</NavLink>
+      <NavLink prefetch="{true}" href="/teams" on:toggle="{() => {isActive=false}}">Mannschaften</NavLink>
+      <NavLink prefetch="{true}" href="/profile" on:toggle="{() => {isActive=false}}">Profil</NavLink>
 
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link" href="/"> Mehr </a>
