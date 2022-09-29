@@ -1,16 +1,15 @@
 <script lang="ts">
   import { invalidateAll } from "$app/navigation";
   import { supabaseClient } from "$lib/db";
-  import { role } from "$lib/sessionStore";
   import { errorToast } from "$lib/toast";
   import moment from "moment";
-  import { get } from "svelte/store";
   import ChangeModal from "./changeModal.svelte";
   import TableDeskButton from "./tableDeskButton.svelte";
   
   export let games : any;
   export let user : any;
   export let isAdmin : boolean = false;
+  export let teams : [] = [];
   
   let changeModalActive = false;
   let modal_game : any;
@@ -69,7 +68,13 @@
 </svelte:head>
 
 <ChangeModal user="{user}" currentParticipant="{modal_currentParticipant}" title="{modal_title}" column_name="{modal_column}" game="{modal_game}" active="{changeModalActive}" on:closeModal="{closeModal}"></ChangeModal>
-
+{#if teams}<b>Filtern nach:</b>
+{#each teams as team}
+<a href="#">
+<span class="tag my-3 mx-1 {team.team_color}">{team.name}</span>
+</a>
+{/each}
+{/if}
 <div class="b-table">
   <div class="table-wrapper has-mobile-cards">
     <table class="table is-fullwidth is-striped is-hoverable is-fullwidth">
@@ -88,7 +93,7 @@
       <tbody>
         {#each games as game}
           <tr>
-            <td data-label="Liga"><span class="tag is-primary">{game.league_name}</span></td>
+            <td data-label="Liga"><span class="tag {game.team.team_color}">{game.league_name}</span></td>
             {#if isAdmin} <td data-label="Aktion">
               <button href="#" title="Bearbeiten" class="button is-info is-small"><span class="icon is-small">
                 <i class="fas fa-pen-to-square"></i>

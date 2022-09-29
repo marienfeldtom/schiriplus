@@ -13,7 +13,7 @@ export const load: PageLoad = withAuth(
     const { data: games } = await getSupabaseClient()
       .from("games")
       .select(
-        `id, date, league_name, name, teams(*), referee1:referee_1_id (*), 
+        `id, date, league_name, name, referee1:referee_1_id (*), 
     referee2:referee_2_id ( * ), 
     judge1:judge_1_id ( * ),
     judge2:judge_2_id ( * ),
@@ -22,6 +22,9 @@ export const load: PageLoad = withAuth(
       .order("date")
       .lt("date", dateString2)
       .gt("date", dateString1);
-    return { games, user: session.user };
+      console.log(games)
+
+      const {data: teams} = await getSupabaseClient().from('teams').select(`*`);
+    return { games, user: session.user, teams };
   }
 );

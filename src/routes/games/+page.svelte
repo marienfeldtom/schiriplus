@@ -9,7 +9,7 @@
   </span><span>Spiele importieren</span></a>
 </div>
 <h1 class="title is-1">Alle Spiele (3 Monate)</h1>
-<GamesTable games={data.games} user={data.user}></GamesTable>
+<GamesTable games={data.games} user={data.user} teams={data.teams}></GamesTable>
 </section>
 <style>
 </style>
