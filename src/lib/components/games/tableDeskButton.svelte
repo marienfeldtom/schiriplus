@@ -9,6 +9,7 @@
   export let column_name : any;
   export let data_label : any;
   export let user_id : any;
+  export let isAdmin : boolean = false;
   
   let loading = false;
 
@@ -73,6 +74,7 @@
      {#if referee != null}
       {#if referee.id == user_id}
         <span class="ml-auto">{referee.username}</span>
+        {#if !isAdmin}
         <button
           title="Absagen"
           on:click={removeParticipation}
@@ -84,11 +86,13 @@
             <i class="fas fa-ban" />
           </span>
         </button>
+        {/if}
       {:else}
         <span class="ml-auto">{referee.username}</span>
       {/if}
     {:else}
       <span class="ml-auto">Fehlt</span>
+      {#if !isAdmin}
       <button
         title="Eintragen"
         on:click={addParticipation}
@@ -100,8 +104,9 @@
           <i class="fas fa-hand-point-up" />
         </span>
       </button>
+      {/if}
     {/if}
-    {#if $role.isAdmin}
+    {#if isAdmin}
     <button
     title="Ändern"
     on:click={toggleModal}

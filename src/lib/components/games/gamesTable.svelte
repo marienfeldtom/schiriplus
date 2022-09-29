@@ -10,6 +10,7 @@
   
   export let games : any;
   export let user : any;
+  export let isAdmin : boolean = false;
   
   let changeModalActive = false;
   let modal_game : any;
@@ -75,6 +76,7 @@
       <thead>
         <tr>
           <th>Liga</th>
+          {#if isAdmin} <th>Aktion</th>{/if}
           <th>Spiel</th>
           <th>Anpfiff</th>
           <th>Schiedsrichter 1</th>
@@ -87,12 +89,16 @@
         {#each games as game}
           <tr>
             <td data-label="Liga"><span class="tag is-primary">{game.league_name}</span></td>
-            <td data-label="Spiel">
-              {#if $role.isAdmin} 
+            {#if isAdmin} <td data-label="Aktion">
+              <button href="#" title="Bearbeiten" class="button is-info is-small"><span class="icon is-small">
+                <i class="fas fa-pen-to-square"></i>
+              </span></button>
               <button title="Löschen" class="button is-danger is-small">
                 <span class="icon is-small"><i class="fas fa-trash"></i>
-                </span></button>
-              {/if}{game.name} </td>
+                </span></button></td>
+              {/if}
+            <td data-label="Spiel">
+              {game.name} </td>
             <td data-label="Anpfiff"
               >{moment(game.date, moment.ISO_8601).format(
                 "DD.MM.YYYY - HH:mm"
@@ -108,6 +114,7 @@
               needsReferee={game.team.needs_referee}
               {user_id}
               {game}
+              {isAdmin}
             />
             <TableDeskButton
               on:addParticipation={addParticipation}
@@ -119,6 +126,7 @@
               needsReferee={game.team.needs_referee}
               {user_id}
               {game}
+              {isAdmin}
             />
             <TableDeskButton
               on:addParticipation={addParticipation}
@@ -130,6 +138,7 @@
               needsReferee={true}
               {user_id}
               {game}
+              {isAdmin}
             />
             <TableDeskButton
               on:addParticipation={addParticipation}
@@ -141,6 +150,7 @@
               needsReferee={true}
               {user_id}
               {game}
+              {isAdmin}
             />
           </tr>
         {/each}

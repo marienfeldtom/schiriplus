@@ -1,8 +1,6 @@
 <script lang="ts">
   import { clickOutside } from '$lib/clickOutside.js';
   import { supabaseClient } from "$lib/db";
-  import { role } from "$lib/sessionStore";
-  import { get, writable } from "svelte/store";
   import NavLink from "./NavLink.svelte";
 
   export let isLoggedIn : any;
@@ -11,10 +9,6 @@
   function handleClickOutside() {
 		isActive = false;
 	}
-
-  function toggleAdmin() {
-    role.set({isAdmin: !get(role).isAdmin});
-  }
 </script>
 
 <nav class="navbar" aria-label="main navigation" use:clickOutside on:click_outside={handleClickOutside}>
@@ -52,13 +46,13 @@
       <NavLink prefetch="{true}" href="/profile" on:toggle="{() => {isActive=false}}">Profil</NavLink>
 
       <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link" href="/"> Mehr </a>
+        <a class="navbar-link" href="/admin/games"> Admin </a>
 
         <div class="navbar-dropdown">
-          <a class="navbar-item" href="/"> Jobs </a>
-          <a class="navbar-item" href="/"> Contact </a>
+          <a class="navbar-item" href="/admin/games">Alle Ansetzungen </a>
+          <a class="navbar-item" href="/"> Rechte verwalten </a>
           <hr class="navbar-divider" />
-          <a class="navbar-item" href="/"> Report an issue </a>
+          <a class="navbar-item" href="/"> Vereins Einstellungen </a>
         </div>
       </div>
     </div>
@@ -67,10 +61,6 @@
       <div class="navbar-item">
         <div class="buttons">
           {#if isLoggedIn}
-          <div class="field mr-5">
-            <input id="switchRtlExample" checked="{get(role).isAdmin}" on:click="{toggleAdmin}" type="checkbox" name="switchRtlExample" class="switch is-info is-small is-rounded">
-            <label for="switchRtlExample">Admin?</label>
-          </div>
             <button on:click={() => supabaseClient.auth.signOut()} class="button is-danger ml-3">
               Ausloggen
             </button>
