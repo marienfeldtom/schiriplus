@@ -1,6 +1,7 @@
 <script lang="ts">
   import { invalidateAll } from "$app/navigation";
   import { supabaseClient } from "$lib/db";
+  import { role } from "$lib/sessionStore";
   import { errorToast } from "$lib/toast";
   import moment from "moment";
   import { get } from "svelte/store";
@@ -83,7 +84,7 @@
       <tbody>
         {#each games as game}
           <tr>
-            <td data-label="Spiel">{game.name} </td>
+            <td data-label="Spiel">{#if $role.isAdmin} <button title="Löschen" class="button is-danger is-small"><span class="icon is-small"><i class="fas fa-trash"></i></span></button>{/if} {game.name} </td>
             <td data-label="Anpfiff"
               >{moment(game.date, moment.ISO_8601).format(
                 "DD.MM.YYYY - HH:mm"
