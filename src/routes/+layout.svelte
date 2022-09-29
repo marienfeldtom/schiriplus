@@ -3,7 +3,7 @@
   import { navigating, page } from "$app/stores";
   import Header from "$lib/components/header/Header.svelte";
   import { supabaseClient } from '$lib/db';
-  import { loading, user } from "$lib/sessionStore";
+  import { loading } from "$lib/sessionStore";
   import { startSupabaseSessionSync } from '@supabase/auth-helpers-sveltekit';
   import { SvelteToast } from "@zerodevx/svelte-toast";
   import "../app.css";

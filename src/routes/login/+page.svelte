@@ -1,7 +1,8 @@
 <script>
-  import Login from '$lib/auth/Login.svelte';
+  import Auth from '$lib/components/auth/Auth.svelte';
+  import { supabaseClient } from '$lib/db';
 </script>
-<Login></Login>
+<Auth {supabaseClient} />
   <style>
   </style>
   

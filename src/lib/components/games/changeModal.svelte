@@ -1,17 +1,17 @@
-<script>
+<script lang="ts">
   import { invalidateAll } from "$app/navigation";
   import { clickOutside } from "$lib/clickOutside.js";
-  import { supabase } from "$lib/supabaseClient";
+  import { supabaseClient } from "$lib/db";
   import { errorToast } from "$lib/toast";
   import { createEventDispatcher, onMount } from "svelte";
   
-  export let title;
-  export let game;
-  export let active;
-  export let column_name;
-  export let currentParticipant;
+  export let title : any;
+  export let game : any;
+  export let active : any;
+  export let column_name : any;
+  export let currentParticipant : any;
 
-  let profiles = [];
+  let profiles  : any = [];
 
   const dispatch = createEventDispatcher();
 
@@ -19,7 +19,7 @@
     dispatch("toggleModal");
   }
 
-  function handleClickOutside(event) {
+  function handleClickOutside() {
       dispatch("closeModal");
   }
 
@@ -33,7 +33,7 @@
       toggleModal();
       errorToast("Die Person ist bereits am Spiel beteiligt!");
     } else {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from("games")
         .update({ [column_name]: currentParticipant ? currentParticipant : null })
         .match({ id: game.id });
@@ -43,7 +43,7 @@
   }
 
   async function loadProfiles() {
-    const { data, error } = await supabase.from("profiles").select(`*`);
+    const { data, error } = await supabaseClient.from("profiles").select(`*`);
     profiles = data;
   }
 

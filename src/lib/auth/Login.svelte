@@ -1,6 +1,5 @@
 <script>
     import googleSignIn from '$lib/assets/btn_google_signin_light_normal_web.png';
-    import { signInWithGoogle } from "$lib/auth";
 </script>
   <section class="hero is-primary is-fullheight">
     <div class="hero-body">

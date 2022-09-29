@@ -1,6 +1,5 @@
 <script lang="ts">
   import googleSignIn from "$lib/assets/btn_google_signin_light_normal_web.png";
-  import { signInWithGoogle } from "$lib/auth";
 
   export let supabaseClient: any;
   export let view : any;

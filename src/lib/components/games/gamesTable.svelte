@@ -1,20 +1,21 @@
-<script>
+<script lang="ts">
   import { invalidateAll } from "$app/navigation";
-  import { user } from "$lib/sessionStore";
-  import { supabase } from "$lib/supabaseClient";
+  import { supabaseClient } from "$lib/db";
   import { errorToast } from "$lib/toast";
   import moment from "moment";
   import { get } from "svelte/store";
   import ChangeModal from "./changeModal.svelte";
   import TableDeskButton from "./tableDeskButton.svelte";
   
-  export let games;
+  export let games : any;
+  export let user : any;
   
   let changeModalActive = false;
-  let modal_game;
-  let modal_title;
-  let modal_column;
-  let modal_currentParticipant;
+  let modal_game : any;
+  let modal_title : any;
+  let modal_column : any;
+  let modal_currentParticipant : any;
+    let user_id = user.id;
 
   function closeModal() {
     changeModalActive = false;
@@ -30,18 +31,17 @@
     changeModalActive = !changeModalActive;
   }
 
-  async function removeParticipation(event) {
+  async function removeParticipation(event : any) {
     //loading.set(true);
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
       .from("games")
       .update({ [event.detail.column_name]: null })
       .match({ id: event.detail.game.id });
     await invalidateAll();
   }
 
-  async function addParticipation(event) {
+  async function addParticipation(event : any) {
     let game = event.detail.game;
-    let user_id = get(user).id;
     if (
       game.referee_1_id == user_id ||
       game.referee_2_id == user_id ||
@@ -51,7 +51,7 @@
       errorToast("Du bist bereits an dem Spiel beteiligt!");
     } else {
       //loading.set(true);
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from("games")
         .update({ [event.detail.column_name]: user_id })
         .match({ id: event.detail.game.id });
@@ -97,6 +97,7 @@
               referee={game.referee1}
               data_label="Schiedsrichter 1"
               needsReferee={game.team.needs_referee}
+              {user_id}
               {game}
             />
             <TableDeskButton
@@ -107,6 +108,7 @@
               referee={game.referee2}
               data_label="Schiedsrichter 2"
               needsReferee={game.team.needs_referee}
+              {user_id}
               {game}
             />
             <TableDeskButton
@@ -117,6 +119,7 @@
               referee={game.judge1}
               data_label="Kampfgericht 1"
               needsReferee={true}
+              {user_id}
               {game}
             />
             <TableDeskButton
@@ -127,6 +130,7 @@
               referee={game.judge2}
               data_label="Kampfgericht 2"
               needsReferee={true}
+              {user_id}
               {game}
             />
           </tr>

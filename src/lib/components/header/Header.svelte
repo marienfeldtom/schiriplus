@@ -1,14 +1,14 @@
-<script>
+<script lang="ts">
   import { clickOutside } from '$lib/clickOutside.js';
   import { supabaseClient } from "$lib/db";
   import { role } from "$lib/sessionStore";
   import { get, writable } from "svelte/store";
   import NavLink from "./NavLink.svelte";
 
-  export let isLoggedIn;
-  let isActive;
+  export let isLoggedIn : any;
+  let isActive : any;
 
-  function handleClickOutside(event) {
+  function handleClickOutside() {
 		isActive = false;
 	}
 
@@ -44,11 +44,11 @@
 
   <div id="navbarBasicExample" class="navbar-menu {isActive ? 'is-active': ''}">
     <div class="navbar-start">
-      <NavLink href="/" on:toggle="{() => {isActive=false}}">Start</NavLink>
+      <NavLink prefetch="{false}" href="/" on:toggle="{() => {isActive=false}}">Start</NavLink>
 
-      <NavLink href="/games" on:toggle="{() => {isActive=false}}">Spiele</NavLink>
-
-      <NavLink href="/teams" on:toggle="{() => {isActive=false}}">Mannschaften</NavLink>
+      <NavLink prefetch="{true}" href="/games" on:toggle="{() => {isActive=false}}">Alle Spiele</NavLink>
+      <NavLink prefetch="{true}" href="/games/own" on:toggle="{() => {isActive=false}}">Meine Ansetzungen</NavLink>
+      <NavLink prefetch="{false}" href="/teams" on:toggle="{() => {isActive=false}}">Mannschaften</NavLink>
 
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link" href="/"> Mehr </a>

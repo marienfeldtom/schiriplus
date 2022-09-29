@@ -1,13 +1,14 @@
-<script>
-  import { role, user } from "$lib/sessionStore";
+<script lang="ts">
+  import { role } from "$lib/sessionStore";
   import { custom_event, get_current_component } from "svelte/internal";
   import { get } from "svelte/store";
 
-  export let referee;
-  export let needsReferee;
-  export let game;
-  export let column_name;
-  export let data_label;
+  export let referee : any;
+  export let needsReferee : any;
+  export let game : any;
+  export let column_name : any;
+  export let data_label : any;
+  export let user_id : any;
   
   let loading = false;
 
@@ -70,7 +71,7 @@
   {#if needsReferee}
   
      {#if referee != null}
-      {#if referee.id == get(user).id}
+      {#if referee.id == user_id}
         <span class="ml-auto">{referee.username}</span>
         <button
           title="Absagen"
