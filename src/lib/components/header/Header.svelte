@@ -1,7 +1,7 @@
 <script>
   import { clickOutside } from '$lib/clickOutside.js';
+  import { supabaseClient } from "$lib/db";
   import { role } from "$lib/sessionStore";
-  import { supabase } from "$lib/supabaseClient";
   import { get, writable } from "svelte/store";
   import NavLink from "./NavLink.svelte";
 
@@ -70,7 +70,7 @@
             <input id="switchRtlExample" checked="{get(role).isAdmin}" on:click="{toggleAdmin}" type="checkbox" name="switchRtlExample" class="switch is-info is-small is-rounded">
             <label for="switchRtlExample">Admin?</label>
           </div>
-            <button on:click={() => supabase.auth.signOut()} class="button is-danger ml-3">
+            <button on:click={() => supabaseClient.auth.signOut()} class="button is-danger ml-3">
               Ausloggen
             </button>
           {:else}
