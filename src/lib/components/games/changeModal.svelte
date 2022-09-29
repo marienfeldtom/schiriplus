@@ -10,6 +10,7 @@
   export let active : any;
   export let column_name : any;
   export let currentParticipant : any;
+  export let user : any;
 
   let profiles  : any = [];
 
@@ -24,11 +25,11 @@
   }
 
   async function save() {
-    if (
-      game.referee_1_id == currentParticipant ||
-      game.referee_2_id == currentParticipant ||
-      game.judge_1_id == currentParticipant ||
-      game.judge_2_id == currentParticipant
+    if (false
+      /* game.referee1.id == user.id ||
+      game.referee2.id == user.id ||
+      game.judge1.id == user.id ||
+      game.judge2.id == user.id */
     ) {
       toggleModal();
       errorToast("Die Person ist bereits am Spiel beteiligt!");

@@ -10,7 +10,7 @@ export const load: PageLoad = withAuth(
     const { data: games } = await getSupabaseClient()
       .from("games")
       .select(
-        `id, date, name, teams(*), referee1:referee_1_id (*), 
+        `id, date, league_name, name, teams(*), referee1:referee_1_id (*), 
     referee2:referee_2_id ( * ), 
     judge1:judge_1_id ( * ),
     judge2:judge_2_id ( * ),

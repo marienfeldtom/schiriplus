@@ -43,11 +43,12 @@
 
   async function addParticipation(event : any) {
     let game = event.detail.game;
-    if (
-      game.referee_1_id == user_id ||
-      game.referee_2_id == user_id ||
-      game.judge_1_id == user_id ||
-      game.judge_2_id == user_id
+    console.log(game)
+    if (false
+      /* game.referee1.id == user_id ||
+      game.referee2.id == user_id ||
+      game.judge1.id == user_id ||
+      game.judge2.id == user_id */
     ) {
       errorToast("Du bist bereits an dem Spiel beteiligt!");
     } else {
@@ -66,13 +67,14 @@
   <meta name="description" content="SchiriPlus" />
 </svelte:head>
 
-<ChangeModal currentParticipant="{modal_currentParticipant}" title="{modal_title}" column_name="{modal_column}" game="{modal_game}" active="{changeModalActive}" on:closeModal="{closeModal}"></ChangeModal>
+<ChangeModal user="{user}" currentParticipant="{modal_currentParticipant}" title="{modal_title}" column_name="{modal_column}" game="{modal_game}" active="{changeModalActive}" on:closeModal="{closeModal}"></ChangeModal>
 
 <div class="b-table">
   <div class="table-wrapper has-mobile-cards">
     <table class="table is-fullwidth is-striped is-hoverable is-fullwidth">
       <thead>
         <tr>
+          <th>Liga</th>
           <th>Spiel</th>
           <th>Anpfiff</th>
           <th>Schiedsrichter 1</th>
@@ -84,7 +86,13 @@
       <tbody>
         {#each games as game}
           <tr>
-            <td data-label="Spiel">{#if $role.isAdmin} <button title="Löschen" class="button is-danger is-small"><span class="icon is-small"><i class="fas fa-trash"></i></span></button>{/if} {game.name} </td>
+            <td data-label="Liga"><span class="tag is-primary">{game.league_name}</span></td>
+            <td data-label="Spiel">
+              {#if $role.isAdmin} 
+              <button title="Löschen" class="button is-danger is-small">
+                <span class="icon is-small"><i class="fas fa-trash"></i>
+                </span></button>
+              {/if}{game.name} </td>
             <td data-label="Anpfiff"
               >{moment(game.date, moment.ISO_8601).format(
                 "DD.MM.YYYY - HH:mm"
