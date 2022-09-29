@@ -16,7 +16,7 @@
   const dispatch = createEventDispatcher();
 
   function toggleModal() {
-    dispatch("toggleModal");
+    dispatch("closeModal");
   }
 
   function handleClickOutside() {
