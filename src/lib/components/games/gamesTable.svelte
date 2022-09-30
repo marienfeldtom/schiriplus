@@ -11,6 +11,8 @@
   export let user: any;
   export let isAdmin: boolean = false;
   export let teams: [] = [];
+  export let filteredGames : any = games;
+  export let filteredTeams : [] = [];
 
   let changeModalActive = false;
   let modal_game: any = games[0];
@@ -18,6 +20,17 @@
 
   function closeModal() {
     changeModalActive = false;
+  }
+
+  function filterGames(team_id) {
+    filteredTeams = [];
+    team_id.forEach((item)=> {
+      filteredTeams.push(item);
+    });
+
+    filteredGames = games.filter((item)=>{
+       return filteredTeams.includes(item.team.id);
+    });
   }
 
   async function removeParticipation(event: any) {
@@ -62,8 +75,11 @@
 />
 
 {#if teams}<b>Filtern nach:</b>
+<a on:click="{()=>{filterGames(teams.map((item)=>{return item.id}))}}">
+  <span class="tag my-3 mx-1 is-white">Alle</span>
+</a>
   {#each teams as team}
-    <TeamBadge href="#" color={team.team_color}>{team.name}</TeamBadge>
+    <TeamBadge on:click="{filterGames([team.id])}" href="#" color={team.team_color}>{team.name}</TeamBadge>
   {/each}
 {/if}
 <div class="b-table">
@@ -82,7 +98,7 @@
         </tr>
       </thead>
       <tbody>
-        {#each games as game}
+        {#each filteredGames as game}
           <tr>
             <td data-label="Liga">
               <TeamBadge href="#" color={game.team.team_color}

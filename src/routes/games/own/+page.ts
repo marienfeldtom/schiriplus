@@ -27,6 +27,7 @@ export const load: PageLoad = withAuth(
           ",judge_2_id.eq." +
           session.user.id
       );
-    return { games, user: session.user };
+      const {data: teams} = await getSupabaseClient().from('teams').select(`*`);
+      return { games, user: session.user, teams };
   }
 );
