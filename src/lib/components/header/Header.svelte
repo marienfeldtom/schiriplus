@@ -93,6 +93,7 @@
 
           <div class="navbar-dropdown">
             <a class="navbar-item" href="/admin/games">Alle Ansetzungen </a>
+            <a class="navbar-item" href="/admin/refusals">Absagen</a>
             <a class="navbar-item" href="/"> Rechte verwalten </a>
             <hr class="navbar-divider" />
             <a class="navbar-item" href="/"> Vereins Einstellungen </a>
