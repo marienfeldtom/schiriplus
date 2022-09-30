@@ -9,7 +9,7 @@
     </span><span>Spiele importieren</span></a>
   </div>
   <h1 class="title is-1">Alle Spiele (Admin)</h1>
-  <GamesTable isAdmin={true} games={data.games} user={data.user}></GamesTable>
+  <GamesTable isAdmin={true} games={data.games} user={data.user} teams={data.teams}></GamesTable>
   </section>
   <style>
   </style>

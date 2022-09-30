@@ -3,36 +3,24 @@
   import { supabaseClient } from "$lib/db";
   import { errorToast } from "$lib/toast";
   import moment from "moment";
-  import ChangeModal from "./changeModal.svelte";
+  import EditGameModal from "./editGameModal.svelte";
   import TableDeskButton from "./tableDeskButton.svelte";
-  
-  export let games : any;
-  export let user : any;
-  export let isAdmin : boolean = false;
-  export let teams : [] = [];
-  
+  import TeamBadge from "./teamBadge.svelte";
+
+  export let games: any;
+  export let user: any;
+  export let isAdmin: boolean = false;
+  export let teams: [] = [];
+
   let changeModalActive = false;
-  let modal_game : any;
-  let modal_title : any;
-  let modal_column : any;
-  let modal_currentParticipant : any;
-    let user_id = user.id;
+  let modal_game: any = games[0];
+  let user_id = user.id;
 
   function closeModal() {
     changeModalActive = false;
   }
 
-  async function toggleModal(event) {
-    if(!changeModalActive) {
-      modal_game = event.detail.game;
-      modal_title = event.detail.game.name;
-      modal_column = event.detail.column_name;
-      modal_currentParticipant = event.detail.currentParticipant ? event.detail.currentParticipant.id : null;
-    }
-    changeModalActive = !changeModalActive;
-  }
-
-  async function removeParticipation(event : any) {
+  async function removeParticipation(event: any) {
     //loading.set(true);
     const { data, error } = await supabaseClient
       .from("games")
@@ -41,10 +29,11 @@
     await invalidateAll();
   }
 
-  async function addParticipation(event : any) {
+  async function addParticipation(event: any) {
     let game = event.detail.game;
-    console.log(game)
-    if (false
+    console.log(game);
+    if (
+      false
       /* game.referee1.id == user_id ||
       game.referee2.id == user_id ||
       game.judge1.id == user_id ||
@@ -66,14 +55,16 @@
   <title>Startseite</title>
   <meta name="description" content="SchiriPlus" />
 </svelte:head>
+<EditGameModal
+  active={changeModalActive}
+  game={modal_game}
+  on:closeModal={closeModal}
+/>
 
-<ChangeModal user="{user}" currentParticipant="{modal_currentParticipant}" title="{modal_title}" column_name="{modal_column}" game="{modal_game}" active="{changeModalActive}" on:closeModal="{closeModal}"></ChangeModal>
 {#if teams}<b>Filtern nach:</b>
-{#each teams as team}
-<a href="#">
-<span class="tag my-3 mx-1 {team.team_color}">{team.name}</span>
-</a>
-{/each}
+  {#each teams as team}
+    <TeamBadge href="#" color={team.team_color}>{team.name}</TeamBadge>
+  {/each}
 {/if}
 <div class="b-table">
   <div class="table-wrapper has-mobile-cards">
@@ -81,29 +72,25 @@
       <thead>
         <tr>
           <th>Liga</th>
-          {#if isAdmin} <th>Aktion</th>{/if}
           <th>Spiel</th>
           <th>Anpfiff</th>
           <th>Schiedsrichter 1</th>
           <th>Schiedsrichter 2</th>
           <th>Kampfgericht 1</th>
           <th>Kampfgericht 2</th>
+          {#if isAdmin} <th>Aktion</th>{/if}
         </tr>
       </thead>
       <tbody>
         {#each games as game}
           <tr>
-            <td data-label="Liga"><span class="tag {game.team.team_color}">{game.league_name}</span></td>
-            {#if isAdmin} <td data-label="Aktion">
-              <button href="#" title="Bearbeiten" class="button is-info is-small"><span class="icon is-small">
-                <i class="fas fa-pen-to-square"></i>
-              </span></button>
-              <button title="Löschen" class="button is-danger is-small">
-                <span class="icon is-small"><i class="fas fa-trash"></i>
-                </span></button></td>
-              {/if}
-            <td data-label="Spiel">
-              {game.name} </td>
+            <td data-label="Liga">
+              <TeamBadge href="#" color={game.team.team_color}
+                >{game.league_name}</TeamBadge
+              >
+            </td><td data-label="Spiel">
+              {game.name}
+            </td>
             <td data-label="Anpfiff"
               >{moment(game.date, moment.ISO_8601).format(
                 "DD.MM.YYYY - HH:mm"
@@ -112,7 +99,6 @@
             <TableDeskButton
               on:addParticipation={addParticipation}
               on:removeParticipation={removeParticipation}
-              on:toggleModal={toggleModal}
               column_name="referee_1_id"
               referee={game.referee1}
               data_label="Schiedsrichter 1"
@@ -124,7 +110,6 @@
             <TableDeskButton
               on:addParticipation={addParticipation}
               on:removeParticipation={removeParticipation}
-              on:toggleModal={toggleModal}
               column_name="referee_2_id"
               referee={game.referee2}
               data_label="Schiedsrichter 2"
@@ -136,7 +121,6 @@
             <TableDeskButton
               on:addParticipation={addParticipation}
               on:removeParticipation={removeParticipation}
-              on:toggleModal={toggleModal}
               column_name="judge_1_id"
               referee={game.judge1}
               data_label="Kampfgericht 1"
@@ -148,7 +132,6 @@
             <TableDeskButton
               on:addParticipation={addParticipation}
               on:removeParticipation={removeParticipation}
-              on:toggleModal={toggleModal}
               column_name="judge_2_id"
               referee={game.judge2}
               data_label="Kampfgericht 2"
@@ -157,6 +140,24 @@
               {game}
               {isAdmin}
             />
+            {#if isAdmin}
+              <td data-label="Aktion">
+                <button
+                  href="#"
+                  title="Bearbeiten"
+                  on:click={() => {modal_game=game; changeModalActive=true;}}
+                  class="button is-info is-small"
+                  ><span class="icon is-small">
+                    <i class="fas fa-pen-to-square" />
+                  </span></button
+                >
+                <button title="Löschen" class="button is-danger is-small">
+                  <span class="icon is-small"
+                    ><i class="fas fa-trash" />
+                  </span></button
+                ></td
+              >
+            {/if}
           </tr>
         {/each}
       </tbody>

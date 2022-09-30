@@ -36,17 +36,6 @@
     };
   }
 
-  async function toggleModal() {
-    loading = true;
-    dispatch("toggleModal", {
-      column_name: column_name,
-      game: game,
-      currentParticipant: referee
-    }).finally(function () {
-      loading = false;
-    });
-  }
-
   async function removeParticipation() {
     loading = true;
     dispatch("removeParticipation", {
@@ -105,17 +94,6 @@
         </span>
       </button>
       {/if}
-    {/if}
-    {#if isAdmin}
-    <button
-    title="Ändern"
-    on:click={toggleModal}
-    class="button is-small is-warning is-pulled-right ml-2"
-    >
-    <span class="icon is-small">
-      <i class="fas fa-pencil" />
-    </span>
-    </button>
     {/if}
   {:else}
     <span class="ml-auto">Angesetzt</span>

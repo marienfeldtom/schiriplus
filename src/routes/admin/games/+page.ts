@@ -20,6 +20,7 @@ export const load: PageLoad = withAuth(
       )
       .order("date")
       .gt("date", dateString1);
-    return { games, user: session.user };
+    const { data: teams } = await getSupabaseClient().from("teams").select(`*`);
+    return { games, user: session.user, teams };
   }
 );
