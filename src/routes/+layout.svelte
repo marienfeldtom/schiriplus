@@ -3,9 +3,10 @@
   import { navigating, page } from "$app/stores";
   import Header from "$lib/components/header/Header.svelte";
   import { supabaseClient } from '$lib/db';
-  import { loading } from "$lib/sessionStore";
+  import { isAdmin, loading } from "$lib/sessionStore";
   import { startSupabaseSessionSync } from '@supabase/auth-helpers-sveltekit';
   import { SvelteToast } from "@zerodevx/svelte-toast";
+  import { onMount } from "svelte";
   import "../app.css";
   import "../scss/main.scss";
 
@@ -18,6 +19,15 @@ startSupabaseSessionSync({
 	function signout() {
 		supabaseClient.auth.signOut();
 	}
+  
+  $: if ($page.data.session.user) {
+    loadData();
+  }
+
+  async function loadData() {
+    const { data } = await supabaseClient.from("profiles").select("*").match({id: $page.data.session.user.id}).single();
+    isAdmin.set(data.isAdmin);
+  }
 </script>
 
 <Header isLoggedIn="{$page.data.session.user}" />

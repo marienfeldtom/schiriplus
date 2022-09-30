@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { role } from "$lib/sessionStore";
   import { custom_event, get_current_component } from "svelte/internal";
   import { get } from "svelte/store";
 

@@ -19,7 +19,6 @@ export const load: PageLoad = withAuth(
       .eq("id", params.slug)
       .order("date", { foreignTable: "games" })
       .single();
-      console.log(team);
     return { team, user: session.user };
   }
 );

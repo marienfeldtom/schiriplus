@@ -2,15 +2,12 @@
   import { page } from "$app/stores";
   import Auth from "$lib/components/auth/Auth.svelte";
   import { supabaseClient } from "$lib/db";
+  import { isAdmin } from "$lib/sessionStore";
   import { onMount } from "svelte";
   import { cubicOut } from "svelte/easing";
   import { tweened } from "svelte/motion";
 
-  let loadedData: any = "";
-  async function loadData() {
-    const { data } = await supabaseClient.from("profiles").select("*");
-    loadedData = data;
-  }
+
 
   const progress = tweened(0, {
     duration: 3000,
@@ -20,10 +17,6 @@
   onMount(async () => {
     progress.set(30);
   });
-
-  $: if ($page.data.session.user) {
-    loadData();
-  }
 
   type RedirectTo = undefined | string;
 

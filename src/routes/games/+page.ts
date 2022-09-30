@@ -22,7 +22,6 @@ export const load: PageLoad = withAuth(
       .order("date")
       .lt("date", dateString2)
       .gt("date", dateString1);
-      console.log(games)
 
       const {data: teams} = await getSupabaseClient().from('teams').select(`*`);
     return { games, user: session.user, teams };
