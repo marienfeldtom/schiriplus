@@ -18,7 +18,7 @@
   });
 
   onMount(async () => {
-    progress.set(15);
+    progress.set(30);
   });
 
   $: if ($page.data.session.user) {
@@ -39,7 +39,7 @@
   <h3 class="title is-3 has-text-centered">Entwicklungs-Fortschritt</h3>
   <div class="columns">
     <div class="column is-half is-offset-one-quarter">
-      <progress class="progress" value={$progress} max="100">10%</progress>
+      <progress class="progress" value={$progress} max="100">30%</progress>
     </div>
   </div>
   <div class="tile is-ancestor">
