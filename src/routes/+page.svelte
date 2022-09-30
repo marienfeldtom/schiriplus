@@ -1,7 +1,16 @@
-<script>
-  import { tweened } from "svelte/motion";
+<script lang="ts">
+  import { page } from "$app/stores";
+  import Auth from "$lib/components/auth/Auth.svelte";
+  import { supabaseClient } from "$lib/db";
+  import { onMount } from "svelte";
   import { cubicOut } from "svelte/easing";
-  import { onMount } from "svelte"
+  import { tweened } from "svelte/motion";
+
+  let loadedData: any = "";
+  async function loadData() {
+    const { data } = await supabaseClient.from("profiles").select("*");
+    loadedData = data;
+  }
 
   const progress = tweened(0, {
     duration: 3000,
@@ -9,21 +18,28 @@
   });
 
   onMount(async () => {
-    progress.set(15);
+    progress.set(30);
   });
+
+  $: if ($page.data.session.user) {
+    loadData();
+  }
+
+  type RedirectTo = undefined | string;
+
+  let url: RedirectTo;
+  url = "test";
 </script>
 
-<svelte:head>
-  <title>Startseite</title>
-  <meta name="description" content="SchiriPlus" />
-</svelte:head>
-
+{#if !$page.data.session.user}
+  <Auth {supabaseClient} />
+{:else}
 <section class="section">
   <h1 class="title is-1">Schiri Plus</h1>
   <h3 class="title is-3 has-text-centered">Entwicklungs-Fortschritt</h3>
   <div class="columns">
     <div class="column is-half is-offset-one-quarter">
-      <progress class="progress" value={$progress} max="100">10%</progress>
+      <progress class="progress" value={$progress} max="100">30%</progress>
     </div>
   </div>
   <div class="tile is-ancestor">
@@ -67,6 +83,4 @@
     </div>
   </div>
 </section>
-
-<style>
-</style>
+{/if}

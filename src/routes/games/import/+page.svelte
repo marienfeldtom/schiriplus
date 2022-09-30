@@ -1,13 +1,14 @@
-<script>
-  import { supabase } from "$lib/supabaseClient";
+<script lang="ts">
+  import { supabaseClient } from "$lib/db";
+  import { successToast } from "$lib/toast";
   import icsToJson from "ics-to-json";
-  import {successToast} from "$lib/toast"
+  import moment from "moment";
   let files = [{ name: "-" }];
   let fileinput;
-  let teamId;
-  let games = [];
-  let gamesToImport= [];
-  export let data;
+  let teamId : any;
+  let games : any = [];
+  let gamesToImport : any = [];
+  export let data  : any;
 
   function abort() {
     games = [];
@@ -16,12 +17,13 @@
   }
 
   async function importGames() {
-    var gamesToImportMapped = gamesToImport.map((item) => ({
-        name: item.name,
+    var gamesToImportMapped = gamesToImport.map((item : any) => ({
+        name: item.name.split(']')[1],
         team_id: teamId,
+        league_name: item.name.match(/\[(.*?)\]/)[1],
         date: item.date
     }));
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
     .from('games')
     .insert(gamesToImportMapped);
     successToast("Spiele wurden erfolgreich importiert");
@@ -37,19 +39,19 @@
     };
   };
 
-  const convert = async (data) => {
+  const convert = async (data : any) => {
     const icsData = data;
     // Convert
     const data2 = icsToJson(icsData);
-    var result = data2.map((item) => ({
+    var result = data2.map((item : any) => ({
       name: item.summary,
       date: item.startDate,
       location: item.location.split("\\").join(""),
-      home: item.summary.split("]").pop().split("-")[0].trim().contains("TuRa Meldorf"),
+      home: item.summary.split("]").pop().split("-")[0].trim().includes("TuRa Meldorf"),
     }));
     result.forEach((o, i) => o.id = i + 1);
-    result.forEach(function(item) {
-        if(item.home) {
+    result.forEach(function(item : any) {
+        if(item.home && moment(item.date).isAfter(moment())) {
             gamesToImport.push(item);
         }
     });

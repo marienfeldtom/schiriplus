@@ -1,20 +1,14 @@
-<script>
+<script lang="ts">
   import { clickOutside } from '$lib/clickOutside.js';
-  import { role } from "$lib/sessionStore";
-  import { supabase } from "$lib/supabaseClient";
-  import { get, writable } from "svelte/store";
+  import { supabaseClient } from "$lib/db";
   import NavLink from "./NavLink.svelte";
 
-  export let isLoggedIn;
-  let isActive;
+  export let isLoggedIn : any;
+  let isActive : any;
 
-  function handleClickOutside(event) {
+  function handleClickOutside() {
 		isActive = false;
 	}
-
-  function toggleAdmin() {
-    role.set({isAdmin: !get(role).isAdmin});
-  }
 </script>
 
 <nav class="navbar" aria-label="main navigation" use:clickOutside on:click_outside={handleClickOutside}>
@@ -44,20 +38,21 @@
 
   <div id="navbarBasicExample" class="navbar-menu {isActive ? 'is-active': ''}">
     <div class="navbar-start">
-      <NavLink href="/" on:toggle="{() => {isActive=false}}">Start</NavLink>
+      <NavLink prefetch="{false}" href="/" on:toggle="{() => {isActive=false}}">Start</NavLink>
 
-      <NavLink href="/games" on:toggle="{() => {isActive=false}}">Spiele</NavLink>
-
-      <NavLink href="/teams" on:toggle="{() => {isActive=false}}">Mannschaften</NavLink>
+      <NavLink prefetch="{true}" href="/games" on:toggle="{() => {isActive=false}}">Alle Spiele</NavLink>
+      <NavLink prefetch="{true}" href="/games/own" on:toggle="{() => {isActive=false}}">Meine Ansetzungen</NavLink>
+      <NavLink prefetch="{true}" href="/teams" on:toggle="{() => {isActive=false}}">Mannschaften</NavLink>
+      <NavLink prefetch="{true}" href="/profile" on:toggle="{() => {isActive=false}}">Profil</NavLink>
 
       <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link" href="/"> Mehr </a>
+        <a class="navbar-link" href="/admin/games"> Admin </a>
 
         <div class="navbar-dropdown">
-          <a class="navbar-item" href="/"> Jobs </a>
-          <a class="navbar-item" href="/"> Contact </a>
+          <a class="navbar-item" href="/admin/games">Alle Ansetzungen </a>
+          <a class="navbar-item" href="/"> Rechte verwalten </a>
           <hr class="navbar-divider" />
-          <a class="navbar-item" href="/"> Report an issue </a>
+          <a class="navbar-item" href="/"> Vereins Einstellungen </a>
         </div>
       </div>
     </div>
@@ -66,11 +61,7 @@
       <div class="navbar-item">
         <div class="buttons">
           {#if isLoggedIn}
-          <div class="field mr-5">
-            <input id="switchRtlExample" checked="{get(role).isAdmin}" on:click="{toggleAdmin}" type="checkbox" name="switchRtlExample" class="switch is-info is-small is-rounded">
-            <label for="switchRtlExample">Admin?</label>
-          </div>
-            <button on:click={() => supabase.auth.signOut()} class="button is-danger ml-3">
+            <button on:click={() => supabaseClient.auth.signOut()} class="button is-danger ml-3">
               Ausloggen
             </button>
           {:else}

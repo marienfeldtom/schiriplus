@@ -1,31 +1,26 @@
-<script>
-  import Header from "$lib/header/Header.svelte";
-  import { onMount } from 'svelte';
+<script lang="ts">
+  import { invalidateAll } from '$app/navigation';
+  import { navigating, page } from "$app/stores";
+  import Header from "$lib/components/header/Header.svelte";
+  import { supabaseClient } from '$lib/db';
+  import { loading } from "$lib/sessionStore";
+  import { startSupabaseSessionSync } from '@supabase/auth-helpers-sveltekit';
+  import { SvelteToast } from "@zerodevx/svelte-toast";
   import "../app.css";
   import "../scss/main.scss";
-  import { navigating } from "$app/stores";
-  import { user, loading } from "$lib/sessionStore";
-  import { SvelteToast } from "@zerodevx/svelte-toast";
-  import { supabase } from "$lib/supabaseClient";
-  import Login from "$lib/auth/Login.svelte";
 
-let session;
+// this sets up automatic token refreshing
+startSupabaseSessionSync({
+		page,
+		handleRefresh: () => invalidateAll()
+	});
 
-  onMount(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      session = data.session;
-      user.set(data.session.user);
-    })
-
-    supabase.auth.onAuthStateChange((_event, _session) => {
-      session = _session;
-    })
-  })
-
-  $: isLoggedIn = session;
+	function signout() {
+		supabaseClient.auth.signOut();
+	}
 </script>
 
-<Header {isLoggedIn} />
+<Header isLoggedIn="{$page.data.session.user}" />
 
 <main>
   <SvelteToast />
@@ -36,12 +31,12 @@ let session;
   >
     <span class="title">Einen Moment bitte...</span>
   </div>
-
-  {#if session}
+<slot></slot>
+<!--   {#if $page.data.session.user}
     <slot />
   {:else}
     <Login />
-  {/if}
+  {/if} -->
 </main>
 
 <section class="section">

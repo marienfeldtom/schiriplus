@@ -1,13 +1,15 @@
-<script>
-  import { role, user } from "$lib/sessionStore";
+<script lang="ts">
+  import { role } from "$lib/sessionStore";
   import { custom_event, get_current_component } from "svelte/internal";
   import { get } from "svelte/store";
 
-  export let referee;
-  export let needsReferee;
-  export let game;
-  export let column_name;
-  export let data_label;
+  export let referee : any;
+  export let needsReferee : any;
+  export let game : any;
+  export let column_name : any;
+  export let data_label : any;
+  export let user_id : any;
+  export let isAdmin : boolean = false;
   
   let loading = false;
 
@@ -32,17 +34,6 @@
       }
       return new Promise((resolve) => resolve(false));
     };
-  }
-
-  async function toggleModal() {
-    loading = true;
-    dispatch("toggleModal", {
-      column_name: column_name,
-      game: game,
-      currentParticipant: referee
-    }).finally(function () {
-      loading = false;
-    });
   }
 
   async function removeParticipation() {
@@ -70,8 +61,9 @@
   {#if needsReferee}
   
      {#if referee != null}
-      {#if referee.id == get(user).id}
+      {#if referee.id == user_id}
         <span class="ml-auto">{referee.username}</span>
+        {#if !isAdmin}
         <button
           title="Absagen"
           on:click={removeParticipation}
@@ -83,11 +75,13 @@
             <i class="fas fa-ban" />
           </span>
         </button>
+        {/if}
       {:else}
         <span class="ml-auto">{referee.username}</span>
       {/if}
     {:else}
       <span class="ml-auto">Fehlt</span>
+      {#if !isAdmin}
       <button
         title="Eintragen"
         on:click={addParticipation}
@@ -99,17 +93,7 @@
           <i class="fas fa-hand-point-up" />
         </span>
       </button>
-    {/if}
-    {#if $role.isAdmin}
-    <button
-    title="Ändern"
-    on:click={toggleModal}
-    class="button is-small is-warning is-pulled-right ml-2"
-    >
-    <span class="icon is-small">
-      <i class="fas fa-pencil" />
-    </span>
-    </button>
+      {/if}
     {/if}
   {:else}
     <span class="ml-auto">Angesetzt</span>

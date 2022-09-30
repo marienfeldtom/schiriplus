@@ -7,24 +7,34 @@
 		"preview": "vite preview"
 	},
 	"devDependencies": {
+		"@fontsource/fira-mono": "^4.5.0",
+		"@supabase/auth-helpers-sveltekit": "^0.7.1",
+		"@supabase/supabase-js": "^1.35.7",
 		"@sveltejs/adapter-auto": "next",
-		"@sveltejs/kit": "next",
+		"@sveltejs/kit": "1.0.0-next.499",
+		"@typescript-eslint/eslint-plugin": "^5.10.1",
+		"@typescript-eslint/parser": "^5.10.1",
 		"@zerodevx/svelte-toast": "^0.7.2",
+		"bulma": "^0.9.4",
+		"bulma-extensions": "^6.2.7",
+		"bulma-responsive-tables": "^1.2.5",
 		"cypress": "^10.8.0",
-		"svelte": "^3.46.0",
+		"ics-to-json": "^1.0.0",
+		"moment": "^2.29.4",
+		"prettier": "^2.5.1",
+		"prettier-plugin-svelte": "^2.5.0",
+		"sass": "^1.55.0",
+		"supabase": "^1.5.0",
+		"svelte": "^3.44.0",
+		"svelte-preprocess": "^4.10.7",
+		"svelte-toast": "^1.0.0",
+		"tslib": "^2.3.1",
+		"typescript": "^4.7.4",
 		"vite": "^3.1.0"
 	},
 	"type": "module",
 	"dependencies": {
-		"@fontsource/fira-mono": "^4.5.0",
-		"@supabase/supabase-js": "^v2.0.0-rc.10",
-		"bulma": "^0.9.4",
-		"bulma-extensions": "^6.2.7",
-		"bulma-responsive-tables": "^1.2.5",
-		"ics-to-json": "^1.0.0",
-		"moment": "^2.29.4",
-		"sass": "^1.55.0",
-		"supabase": "^1.5.0",
-		"svelte-toast": "^1.0.0"
+		"@supabase/auth-helpers-sveltekit": "workspace:*",
+		"@supabase/supabase-js": "^1.35.3"
 	}
 }
