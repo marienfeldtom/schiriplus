@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { invalidateAll } from "$app/navigation";
   import { custom_event, get_current_component } from "svelte/internal";
   import { get } from "svelte/store";
 
@@ -15,10 +16,8 @@
   const dispatch = createEventDispatcher();
   export function createEventDispatcher() {
     const component = get_current_component();
-
     return (type, detail) => {
       const callbacks = component.$$.callbacks[type];
-
       if (callbacks) {
         const arr = [];
         const hasCallbacks = !!callbacks.length;

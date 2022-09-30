@@ -44,7 +44,6 @@
 
   async function addParticipation(event: any) {
     let game = event.detail.game;
-    console.log(game);
     if (
       false
       /* game.referee1.id == user_id ||
