@@ -6,7 +6,6 @@
   import { isAdmin, loading } from "$lib/sessionStore";
   import { startSupabaseSessionSync } from '@supabase/auth-helpers-sveltekit';
   import { SvelteToast } from "@zerodevx/svelte-toast";
-  import { onMount } from "svelte";
   import "../app.css";
   import "../scss/main.scss";
 
@@ -42,11 +41,6 @@ startSupabaseSessionSync({
     <span class="title">Einen Moment bitte...</span>
   </div>
 <slot></slot>
-<!--   {#if $page.data.session.user}
-    <slot />
-  {:else}
-    <Login />
-  {/if} -->
 </main>
 
 <section class="section">

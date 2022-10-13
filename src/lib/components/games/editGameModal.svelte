@@ -1,8 +1,6 @@
 <script lang="ts">
-  import { invalidateAll } from "$app/navigation";
   import { clickOutside } from "$lib/clickOutside.js";
   import { supabaseClient } from "$lib/db";
-  import { errorToast } from "$lib/toast";
   import { createEventDispatcher, onMount } from "svelte";
   import TeamBadge from "./teamBadge.svelte";
 
@@ -46,20 +44,20 @@
       </header>
       <section class="modal-card-body">
         <div class="field">
-          <label class="label">Name</label>
+          <label class="label" for="name">Name</label>
           <div class="control">
             <input name="game_name" class="input" type="text" bind:value={game.name} />
           </div>
         </div>
         <div class="field">
-          <label class="label">Anpfiff</label>
+          <label class="label" for="date">Anpfiff</label>
           <div class="control">
             <input class="input" type="text" name="date" bind:value={game.date} />
           </div>
         </div>
 
         <div class="control">
-          <label class="label">Schiedsrichter 1</label>
+          <label class="label" for="referee1">Schiedsrichter 1</label>
           {#if game.team.needs_referee}
             <div class="select">
               {#if game.referee1}
@@ -84,7 +82,7 @@
         </div>
 
         <div class="control">
-          <label class="label">Schiedsrichter 2</label>
+          <label class="label" for="referee2">Schiedsrichter 2</label>
           {#if game.team.needs_referee}
             <div class="select">
               {#if game.referee2}
@@ -109,7 +107,7 @@
         </div>
 
         <div class="control">
-          <label class="label">Kampfgericht 1</label>
+          <label class="label" for="judge1">Kampfgericht 1</label>
           <div class="select">
             {#if game.judge1}
               <select name="judge1" bind:value={game.judge1.id}>
@@ -129,7 +127,7 @@
           </div>
         </div>
         <div class="control">
-          <label class="label">Kampfgericht 2</label>
+          <label class="label" for="judge2">Kampfgericht 2</label>
           <div class="select">
             {#if game.judge2}
               <select name="judge2" bind:value={game.judge2.id}>

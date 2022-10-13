@@ -7,6 +7,7 @@
   export let provider: string;
 </script>
 
+<!-- svelte-ignore a11y-missing-attribute -->
 <a
   class="button is-medium mr-2 mt-2 {loading ? 'is-loading' : ''}"
   on:click={() => {

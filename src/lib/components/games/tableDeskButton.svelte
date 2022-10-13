@@ -1,7 +1,5 @@
 <script lang="ts">
-  import { invalidateAll } from "$app/navigation";
   import { custom_event, get_current_component } from "svelte/internal";
-  import { get } from "svelte/store";
 
   export let referee : any;
   export let needsReferee : any;
@@ -16,10 +14,10 @@
   const dispatch = createEventDispatcher();
   export function createEventDispatcher() {
     const component = get_current_component();
-    return (type, detail) => {
+    return (type: string, detail: any) => {
       const callbacks = component.$$.callbacks[type];
       if (callbacks) {
-        const arr = [];
+        const arr: any[] = [];
         const hasCallbacks = !!callbacks.length;
         const event = custom_event(type, detail);
         callbacks.slice().forEach((fn) => {

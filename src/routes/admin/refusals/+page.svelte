@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { PageData } from ".svelte-kit/types/src/routes/$types";
   import moment from "moment";
-  /** @type {import('./$types').PageData} */
   export let data: PageData;
 </script>
 

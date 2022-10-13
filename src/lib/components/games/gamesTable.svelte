@@ -22,13 +22,13 @@
     changeModalActive = false;
   }
 
-  function filterGames(team_id) {
+  function filterGames(team_id : Array<number>) {
     filteredTeams = [];
-    team_id.forEach((item)=> {
+    team_id.forEach((item : number)=> {
       filteredTeams.push(item);
     });
 
-    filteredGames = games.filter((item)=>{
+    filteredGames = games.filter((item : object)=>{
        return filteredTeams.includes(item.team.id);
     });
   }
@@ -74,6 +74,7 @@
 />
 
 {#if teams}<b>Filtern nach:</b>
+<!-- svelte-ignore a11y-missing-attribute -->
 <a on:click="{()=>{filterGames(teams.map((item)=>{return item.id}))}}">
   <span class="tag my-3 mx-1 is-white">Alle</span>
 </a>

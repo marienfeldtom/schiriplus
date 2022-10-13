@@ -1,6 +1,6 @@
 import { toast } from "@zerodevx/svelte-toast";
 
-export function errorToast(message){
+export function errorToast(message: string){
     toast.push(message, {
         theme: {
           "--toastBackground": "#F56565",
@@ -8,7 +8,7 @@ export function errorToast(message){
         },
       });
   }
-  export function successToast(message){
+  export function successToast(message: string){
     toast.push(message, {
         theme: {
           '--toastBackground': '#48BB78',

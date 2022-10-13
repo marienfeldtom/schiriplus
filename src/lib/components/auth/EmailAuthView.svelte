@@ -1,9 +1,7 @@
 <script lang="ts">
-  import googleSignIn from "$lib/assets/btn_google_signin_light_normal_web.png";
 
   export let supabaseClient: any;
   export let view : any;
-  export let setView;
 
   let error = "",
     message = "",

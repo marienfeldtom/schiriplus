@@ -1,7 +1,7 @@
 // src/routes/posts/+page.server.ts
 import type { Actions } from './$types';
 import { withAuth } from '@supabase/auth-helpers-sveltekit';
-import { error, invalid } from '@sveltejs/kit';
+import { error } from "@sveltejs/kit"
 
 export const actions: Actions = {
   default: withAuth(async ({ session, getSupabaseClient, request }) => {
@@ -13,7 +13,7 @@ export const actions: Actions = {
     const formData = await request.formData();
     const content = formData.get('game_name');
 
-    const { data, error } = await getSupabaseClient()
+    const { data } = await getSupabaseClient()
     .from("games")
     .update({ 
         name: formData.get('game_name'),
